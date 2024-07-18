@@ -1,4 +1,13 @@
 import random
+import matplotlib.pyplot as plt
+
+def plot(steps):
+	# Plot a straight diagonal line with ticked style path
+	x = range(len(steps))
+	y = steps
+
+	plt.plot(x,y)
+	plt.show()
 
 
 class Board():
@@ -20,6 +29,7 @@ class Player():
 		self.pos = 0
 		self.ladder_climed = 0
 		self.snake_bites = 0
+		self.steps = [0]
 
 	def throw(self, other):
 		return other.throw()
@@ -59,6 +69,7 @@ class Game():
 							player.snake_bites += 1
 						else:
 							player.pos = new_pos
+						player.steps.append(player.pos)
 						if player.pos == 100:
 							self.winners[player] = i
 							self.list_of_players.remove(player)
@@ -70,7 +81,8 @@ class Game():
 			# if len(self.winners) == 1:
 			# 	break
 		for player in self.winners.keys():
-			print(f'{player.name} wins after {self.winners[player]} rounds who climed ladder {player.ladder_climed} times and got bite {player.snake_bites} times')
+			print(f'{player.name} wins after {self.winners[player]} rounds who climed ladder {player.ladder_climed} times and got bite {player.snake_bites} times with steps {player.steps}')
+			print('---')
 			 
 
 
@@ -84,4 +96,8 @@ if __name__ == '__main__':
 	game = Game(list_of_players)
 
 	game.start()
+
+	for player in game.winners.keys():
+		plot(player.steps)
+
 	print('-----------------the END--------------------')
