@@ -1,15 +1,6 @@
 import random
 import matplotlib.pyplot as plt
 
-def plot(steps):
-	# Plot a straight diagonal line with ticked style path
-	x = range(len(steps))
-	y = steps
-
-	plt.plot(x,y)
-	plt.show()
-
-
 class Board():
 	def __init__(self):
 		self.positions = list(range(1,101))
@@ -85,6 +76,18 @@ class Game():
 			print('---')
 			 
 
+def plot_results(winners):
+	# Plot a straight diagonal line with ticked style path
+	
+	
+	for player in winners.keys():
+		plt.plot(range(len(player.steps)), player.steps, label=player.name)
+	plt.legend(loc="upper left")
+	plt.xlabel("No of rounds")
+	plt.ylabel("Steps")
+	plt.title("Graph showing how each player moves")
+	plt.show()	
+
 
 if __name__ == '__main__':
 	player1 = Player("Tamim")
@@ -97,7 +100,6 @@ if __name__ == '__main__':
 
 	game.start()
 
-	for player in game.winners.keys():
-		plot(player.steps)
+	plot_results(game.winners)
 
 	print('-----------------the END--------------------')
